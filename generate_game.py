@@ -433,19 +433,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     padding: 16px 20px;
     position: relative;
   }
-  .chat-container.danger-zone::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    box-shadow: inset 0 0 120px rgba(220, 38, 38, 0.15);
-    z-index: 10;
-    animation: dangerPulse 2s ease-in-out infinite;
-  }
-  @keyframes dangerPulse {
-    0%, 100% { box-shadow: inset 0 0 120px rgba(220, 38, 38, 0.1); }
-    50% { box-shadow: inset 0 0 120px rgba(220, 38, 38, 0.25); }
-  }
 
   /* Messages */
   .msg {
@@ -517,10 +504,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .msg.tool-msg.catastrophe .tool-input {
     color: var(--red);
   }
-  @keyframes catastrophePulse {
-    0%, 100% { box-shadow: 0 0 8px rgba(239, 68, 68, 0.2); }
-    50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
-  }
 
   .cursor-blink {
     display: inline-block;
@@ -568,15 +551,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     color: var(--amber);
     cursor: pointer;
     opacity: 1;
-    animation: acceptPulse 1s ease-in-out infinite;
   }
   .accept-btn.ready:hover {
     background: var(--amber);
     color: var(--bg);
-  }
-  @keyframes acceptPulse {
-    0%, 100% { box-shadow: 0 0 4px rgba(245, 158, 11, 0.2); }
-    50% { box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); }
   }
 
   .msg.scream-msg {
@@ -629,9 +607,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     white-space: nowrap;
   }
   .autopilot-toggle.on {
-    border-color: var(--amber);
-    color: var(--amber);
-    background: rgba(245, 158, 11, 0.1);
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
   }
   .autopilot-toggle:hover {
     border-color: var(--amber);
@@ -646,18 +624,17 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .interrupt-btn {
     flex: 1;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 700;
-    padding: 12px;
-    border: 2px solid var(--red);
+    padding: 8px 20px;
+    border: 1px solid var(--red);
     background: rgba(239, 68, 68, 0.1);
     color: var(--red);
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.1s;
-    animation: interruptGlow 1.5s ease-in-out infinite;
+    transition: all 0.15s;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
   }
   .interrupt-btn:hover {
     background: var(--red);
@@ -669,10 +646,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     opacity: 0.7;
     letter-spacing: 0;
     text-transform: none;
-  }
-  @keyframes interruptGlow {
-    0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
-    50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.4); }
   }
 
   /* ---- WIN SCREEN ---- */
@@ -687,12 +660,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     font-size: 32px;
     font-weight: 700;
     color: var(--green);
-    text-shadow: 0 0 40px rgba(74, 222, 128, 0.3);
-    animation: winPulse 2s ease-in-out infinite;
-  }
-  @keyframes winPulse {
-    0%, 100% { text-shadow: 0 0 40px rgba(74, 222, 128, 0.3); }
-    50% { text-shadow: 0 0 60px rgba(74, 222, 128, 0.6); }
   }
   .score-card {
     background: var(--bg-light);
@@ -777,26 +744,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     gap: 20px;
     padding: 40px;
   }
-  #lose-screen.shake {
-    animation: screenShake 0.5s ease-out;
-  }
-  @keyframes screenShake {
-    0%, 100% { transform: translate(0); }
-    10% { transform: translate(-8px, 4px); }
-    20% { transform: translate(8px, -4px); }
-    30% { transform: translate(-6px, 6px); }
-    40% { transform: translate(6px, -2px); }
-    50% { transform: translate(-4px, 4px); }
-    60% { transform: translate(4px, -4px); }
-    70% { transform: translate(-2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    90% { transform: translate(-1px, 1px); }
-  }
   #lose-screen h1 {
     font-size: 36px;
     font-weight: 700;
     color: var(--red);
-    text-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
   }
   .disaster-box {
     background: rgba(239, 68, 68, 0.08);
@@ -1146,7 +1097,6 @@ function startGame() {
   messagesCompleted = 0;
   totalTokensStreamed = 0;
   $chat.innerHTML = '';
-  $chat.classList.remove('danger-zone');
   setActionBtn('idle');
 
   showScreen('game');
@@ -1466,7 +1416,6 @@ function triggerLose() {
 
   // Mark the catastrophe message as red and show danger zone now that it executed
   if (currentElement) currentElement.classList.add('catastrophe');
-  $chat.classList.add('danger-zone');
 
   // Save stats before playing aftermath
   const elapsed = elapsedTime;
@@ -1474,7 +1423,7 @@ function triggerLose() {
 
   // Play out remaining messages in the chat as the aftermath
   const aftermathMsgs = MESSAGES.slice(currentMsgIndex + 1);
-  let delay = 800; // initial pause after catastrophe
+  let delay = 400; // initial pause after catastrophe
 
   aftermathMsgs.forEach((msg, i) => {
     setTimeout(() => {
@@ -1501,7 +1450,7 @@ function triggerLose() {
         scrollToBottom();
       }
     }, delay);
-    delay += 1200;
+    delay += 600;
   });
 
   // After all aftermath messages, show "See Results" button
@@ -1524,7 +1473,7 @@ function triggerLose() {
       }
     };
     document.addEventListener('keydown', aftermathKeyHandler);
-  }, delay + 400);
+  }, delay + 200);
 }
 
 let loseElapsed = 0;
@@ -1556,16 +1505,9 @@ function showLoseScreen() {
     aftermath.className = 'aftermath';
     aftermath.innerHTML = currentLevel.loseAftermath.replace(/\n/g, '<br>');
     box.appendChild(aftermath);
-    const scream = document.createElement('div');
-    scream.className = 'scream';
-    scream.innerHTML = 'The user screamed:<br>' + currentLevel.loseScream + '<br><br>...but it was too late.';
-    box.appendChild(scream);
   }
 
   showScreen('lose');
-  const loseEl = document.getElementById('lose-screen');
-  loseEl.classList.add('shake');
-  setTimeout(() => loseEl.classList.remove('shake'), 600);
 }
 
 function resetGame() {
@@ -1577,7 +1519,6 @@ function resetGame() {
     aftermathKeyHandler = null;
   }
   $chat.innerHTML = '';
-  $chat.classList.remove('danger-zone');
   setActionBtn('idle');
   renderLevelCards();
   showScreen('title');
