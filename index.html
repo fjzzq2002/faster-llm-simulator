@@ -1202,11 +1202,10 @@ function finishCurrentMessage() {
   currentMsgIndex++;
   subState = 'between';
 
-  // If next message is also assistant, continue the burst with small gap
   if (currentMsgIndex < MESSAGES.length && MESSAGES[currentMsgIndex].role === 'assistant') {
     setTimeout(() => {
       if (state === 'playing') advanceMessage();
-    }, 100);
+    }, 10);
   } else {
     advanceMessage();
   }
