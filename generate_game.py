@@ -871,7 +871,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 <!-- ============ PERSISTENT HUD ============ -->
 <div class="hud">
-  <button class="theme-toggle" id="theme-toggle" title="Toggle light/dark mode">&#9788;</button>
+  <button class="theme-toggle" id="theme-toggle" title="Toggle light/dark mode">&#9728;</button>
   <div class="hud-item timer">TIMER: <span id="hud-timer">00:00.0</span></div>
   <div class="hud-item" id="hud-msg-container">MSG: <span id="hud-msg">0</span></div>
   <div class="hud-item">SPEED: <span id="hud-speed">15</span> tok/s</div>
@@ -1640,12 +1640,12 @@ $speedSlider.addEventListener('input', (e) => {
 const $themeToggle = document.getElementById('theme-toggle');
 if (getCookie('theme') === 'light') {
   document.body.classList.add('light');
-  $themeToggle.textContent = '\u263E';
+  $themeToggle.textContent = '\u263E'; // moon
 }
 $themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('light');
   const isLight = document.body.classList.contains('light');
-  $themeToggle.textContent = isLight ? '\u263E' : '\u2606';
+  $themeToggle.textContent = isLight ? '\u263E' : '\u2600';
   setCookie('theme', isLight ? 'light' : 'dark');
 });
 
