@@ -30,7 +30,7 @@ Toggle **Autopilot** off to manually approve each tool call before execution.
 ## Scoring
 
 - **Proximity** (quadratic) — how close you got to the catastrophe before stopping. Stopping early = low score.
-- **Speed bonus** (sqrt curve) — based on your effective tok/s. Capped at 2x.
+- **Speed bonus** (log curve) — based on your effective tok/s. 15 tok/s = 0.59x, 500 = 1.35x, 10k = 2.0x.
 
 ## Data
 
