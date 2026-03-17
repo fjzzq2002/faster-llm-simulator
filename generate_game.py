@@ -25,7 +25,7 @@ LEVEL_DEFS = [
         "catastrophe_idx": 82,  # Edit that changes threshold from 5 to 2
         "description": "The user asked the AI to fix a hover bug. The AI fixed it — then decided to also change an unrelated threshold. The user did not appreciate it.",
         "warn_text": "secretly changed an unrelated setting",
-        "lose_title": "U N R E Q U E S T E D",
+        "lose_title": "Too late...",
         "lose_cmds": [
             "Edit: VariantSelector.tsx — changed threshold from >= 5 to >= 2"
         ],
@@ -43,7 +43,7 @@ LEVEL_DEFS = [
         "catastrophe_idx": 139,  # git checkout HEAD --
         "description": "The user asked the AI to refactor a 3,000-line component. It went well — until a bug report came in and the AI decided to \"revert the changes\", permanently destroying hours of uncommitted work.",
         "warn_text": "ran git checkout HEAD --",
-        "lose_title": "C A T A S T R O P H E",
+        "lose_title": "Too late...",
         "lose_cmds": [
             "git checkout HEAD -- src/shared/components/MediaLightbox/MediaLightbox.tsx src/shared/components/MediaLightbox/components/index.ts",
             "rm .../components/LightboxOverlay.tsx"
@@ -891,19 +891,18 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <!-- ============ MIDDLE AREA (screens swap here) ============ -->
 <div class="screen-area">
   <div id="title-screen" class="screen active">
-    <h1>CAN YOU STOP THE AI?</h1>
+    <h1>Is it too fast?</h1>
     <div class="subtitle">
-      LLMs are getting faster. Can human monitoring keep up?
-    </div>
-    <div class="premise">
-      These are real AI coding sessions where the assistant makes a catastrophic mistake.
-      You're watching the replay at adjustable speed. <b>Your job:</b> hit INTERRUPT
-      before the disaster happens.<br><br>
-      Crank up the speed for a better score — but read carefully, or you'll miss the moment.
+      We replayed real AI coding sessions at faster speed to simulate a possible faster agent.
+      In each one, the assistant does something the user didn't ask for.
+      Can you stop the agent before that?
     </div>
     <div id="level-list" class="level-list"></div>
-    <div style="font-size: 12px; margin-top: -4px; color: var(--text);">
-      Scenarios from <a href="https://huggingface.co/datasets/peteromallet/dataclaw-peteromallet" target="_blank" style="color: var(--amber); text-decoration: underline;">peteromallet/dataclaw-peteromallet</a> on Hugging Face. Thanks!
+    <div style="font-size: 12px; color: var(--text-dim);">
+      Use the slider in the top-right corner to change the simulated speed.
+    </div>
+    <div style="font-size: 12px; margin-top: -4px; color: var(--text-dim);">
+      Scenarios from <a href="https://huggingface.co/datasets/peteromallet/dataclaw-peteromallet" target="_blank" style="color: var(--text-dim); text-decoration: underline;">peteromallet/dataclaw-peteromallet</a> on Hugging Face. Thanks!
     </div>
   </div>
 
@@ -912,7 +911,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </div>
 
   <div id="win-screen" class="screen">
-    <h1>CRISIS AVERTED</h1>
+    <h1>Good job!</h1>
     <div id="win-grade" class="grade S">S</div>
     <div class="score-card">
       <div class="score-row">
@@ -944,7 +943,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </div>
 
   <div id="lose-screen" class="screen">
-    <h1 id="lose-title">C A T A S T R O P H E</h1>
+    <h1 id="lose-title">Too late...</h1>
     <div class="disaster-box" id="lose-box"></div>
     <div style="color: var(--text-dim); font-size: 13px;" id="lose-stats"></div>
     <div style="display:flex; gap:12px;">

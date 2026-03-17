@@ -1,10 +1,6 @@
-# Can You Stop The AI?
+# Is it too fast?
 
-LLMs are getting faster. Can human monitoring keep up?
-
-A speed-reading game built from real AI coding sessions where the assistant makes a catastrophic mistake. Watch the conversation replay at adjustable speed and hit **INTERRUPT** before the disaster happens.
-
-Crank up the speed for a better score — but read carefully, or you'll miss the moment.
+We replayed real AI coding sessions at faster speed to simulate a possible faster agent. In each one, the assistant does something the user didn't ask for. Can you stop the agent before that?
 
 > This is a toy project vibe-coded in two hours. Expect issues and poor code quality.
 
@@ -29,7 +25,7 @@ Toggle **Autopilot** off to manually approve each tool call before execution.
 
 ## Scoring
 
-- **Proximity** (quadratic) — how close you got to the catastrophe before stopping. Stopping early = low score.
+- **Proximity** (quadratic) — how close you got to the mistake before stopping. Stopping early = low score.
 - **Speed bonus** (log curve) — based on your effective tok/s. 15 tok/s = 0.59x, 500 = 1.35x, 10k = 2.0x.
 
 ## Data
