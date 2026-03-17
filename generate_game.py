@@ -618,7 +618,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .autopilot-toggle {
     font-family: inherit;
     font-size: 11px;
-    padding: 4px 10px;
+    padding: 6px 10px;
+    line-height: 1.4;
     border: 1px solid var(--border);
     background: transparent;
     color: var(--text-dim);
@@ -635,6 +636,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .autopilot-toggle:hover {
     border-color: var(--amber);
     color: var(--amber);
+  }
+  .autopilot-toggle .shortcut {
+    display: block;
+    font-size: 9px;
+    opacity: 0.6;
   }
 
   .interrupt-btn {
@@ -954,7 +960,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <button class="interrupt-btn" id="interrupt-btn">
     INTERRUPT <span class="shortcut">(Space / Esc)</span>
   </button>
-  <button class="autopilot-toggle on" id="autopilot-toggle">Autopilot: ON</button>
+  <button class="autopilot-toggle on" id="autopilot-toggle">Autopilot: ON<span class="shortcut">(Tab)</span></button>
 </div>
 
 <script>
@@ -1594,17 +1600,23 @@ $actionBtn.addEventListener('click', () => {
 // Restore autopilot from cookie
 if (getCookie('autopilot') === 'off') {
   autopilot = false;
-  $autopilotToggle.textContent = 'Autopilot: OFF';
+  $autopilotToggle.innerHTML = 'Autopilot: OFF<span class="shortcut">(Tab)</span>';
   $autopilotToggle.classList.remove('on');
 }
 $autopilotToggle.addEventListener('click', () => {
   autopilot = !autopilot;
-  $autopilotToggle.textContent = autopilot ? 'Autopilot: ON' : 'Autopilot: OFF';
+  $autopilotToggle.innerHTML = autopilot ? 'Autopilot: ON<span class="shortcut">(Tab)</span>' : 'Autopilot: OFF<span class="shortcut">(Tab)</span>';
   $autopilotToggle.classList.toggle('on', autopilot);
   setCookie('autopilot', autopilot ? 'on' : 'off');
 });
 
 document.addEventListener('keydown', (e) => {
+  // Global Tab capture — toggle autopilot from any screen
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    $autopilotToggle.click();
+    return;
+  }
   if (state === 'playing') {
     if (e.key === 'Escape' || (e.key === ' ' && subState !== 'waiting_send' && subState !== 'waiting_accept')) {
       e.preventDefault();
