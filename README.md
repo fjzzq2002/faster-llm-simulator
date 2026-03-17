@@ -10,7 +10,7 @@ Crank up the speed for a better score — but read carefully, or you'll miss the
 
 ## Play
 
-**[Play online](https://ziqianz.github.io/faster-llm-simulator/)** or open `index.html` locally.
+**[Play online](https://fjzzq2002.github.io/faster-llm-simulator/)** or open `index.html` locally.
 
 ## Levels
 
